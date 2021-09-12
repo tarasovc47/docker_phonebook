@@ -1,5 +1,19 @@
 <?php
-# единая точка входа
+
+use system\core\Autoloader;
+
+try {
+    ini_set('display_errors', 0);
+    ini_set('file_uploads', 1);
+    error_reporting(E_ALL);
+    define('ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
+    require_once (ROOT . 'system/core/Autoloader.php');
+    Autoloader::register();
+} catch (Exception $e) {
+    var_dump($e);
+}
+
+/*# единая точка входа
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); # избавляемся от аргументов, типа localhost/test?id=100500
 $segments = explode('/', trim($uri, '/')); # разбиваем путь на сегменты
 
@@ -23,4 +37,4 @@ else # если без /admin/
     else $file = '404.php';
 }
 
-require 'views/' . $file; # подключаем полученный файл
+require 'views/' . $file; # подключаем полученный файл*/
