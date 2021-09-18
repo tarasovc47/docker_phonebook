@@ -10,8 +10,9 @@ try {
     error_reporting(E_ALL);
     define('ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
     require_once (ROOT . 'system/core/Autoloader.php');
+    $config = require ROOT . 'config/config.php';
     Autoloader::register();
-    App::start();
+    App::start($config);
     Router::start();
 } catch (Exception $e) {
     var_dump($e);

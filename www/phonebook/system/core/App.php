@@ -3,8 +3,17 @@ namespace system\core;
 
 class App
 {
-    public static function start()
+    /**
+     * @var object компоненты приложения
+     */
+    public static $components;
+    /**
+     * @var массив с конфигурацией
+     */
+    private $_config;
+    public static function start($config)
     {
-        var_dump('success');
+        $app = new self;
+        var_dump($config);
     }
 }
