@@ -3,32 +3,48 @@ namespace system\core;
 
 class Router
 {
-    public static function start()
+    private $routes;
+
+    public function __construct()
     {
-        # единая точка входа
-        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); # избавляемся от аргументов, типа localhost/test?id=100500
-        $segments = explode('/', trim($uri, '/')); # разбиваем путь на сегменты
+        $routesPath = ROOT . '/config/routes.php'; # подключаем файл с путями
+        $this->routes = include ($routesPath);
+    }
 
-        if ($segments[0] === 'auth') # если первый сегмент auth
+    /**
+     * Возвращаем строку запроса
+     * @return string|void
+     */
+    private function getUri()
+    {
+        if (!empty($_SERVER['REQUEST_URI']))
         {
-            if ($segments[1] === 'signup') # а второй - регистрация
-            {
-                $file = 'auth/signup.php'; # подключаем страницу регистрации
-            }
-            elseif ($segments[1] === 'signin') # а второй - авторизация
-            {
-                $file = 'auth/signin.php'; # подключаем страничку авторизации
-            }
-            else $file = '404.php'; # иначе 404
+            return trim($_SERVER['REQUEST_URI'], '/');
         }
-
-        else # если без /admin/
-        {
-            if ($uri === '/') # то тут тоже простенький роутер
-                $file = 'main.php';
-            else $file = '404.php';
+    }
+    public function start()
+    {
+        /** получаем строку запроса $uri */
+        $uri = $this->getUri();
+        /** проверяем наличие $uri в массиве путей routes.php */
+        foreach ($this->routes as $uriPattern => $path) {
+            if (preg_match("~$uriPattern~", $uri))
+            {
+                $segments = explode('/', $path);
+                $controllerName = array_shift($segments) . 'Controller';
+                $actionName = 'action' . ucfirst(array_shift($segments));
+            }
+            $controllerFile = ROOT . '/controllers/' . $controllerName . '.php';
+            if (file_exists($controllerFile))
+            {
+                include_once ($controllerFile);
+            }
+            $controllerObject = new $controllerName;
+            $result = $controllerObject->$actionName();
+            if ($result != null)
+            {
+                break;
+            }
         }
-
-        require 'views/' . $file; # подключаем полученный файл
     }
 }

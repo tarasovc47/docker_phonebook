@@ -13,7 +13,8 @@ try {
     $config = require ROOT . 'config/config.php';
     Autoloader::register();
     App::start($config);
-    Router::start();
+    $router = new Router();
+    $router->start();
 } catch (Exception $e) {
     var_dump($e);
 }
