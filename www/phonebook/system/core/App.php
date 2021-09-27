@@ -14,6 +14,5 @@ class App
     public static function start($config)
     {
         $app = new self;
-        var_dump($config);
     }
 }

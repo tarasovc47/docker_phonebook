@@ -1,6 +1,5 @@
 <?php
 return [
-    '/' => 'site/index',
-    'index' => 'site/index',
-    'news' => 'site/news',
+    "site/index" => "site/index",
+    "site/news" => "site/news",
 ];
