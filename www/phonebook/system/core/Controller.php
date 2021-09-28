@@ -35,7 +35,8 @@ class Controller
      */
     public function showError(string $message = null, $exit = false)
     {
-        $this->render('error', compact('message'));
+        var_dump('404');
+        $this->render('404', compact('message'));
         if ($exit)
         {
             exit();
