@@ -41,14 +41,14 @@ class Router
                 }
                 $controllerObject = new $controllerName; # создаём новый экземпляр конроллера
                 $result = $controllerObject->$actionName(); # вызываем экшен
-                if ($result != null) # если вызвалось - разрываем
-                {
-                    break;
-                }
-                # если экшн не нашли, то покажем 404, но это не точно
-                $controller = new Controller();
-                return $controller->showError();
             }
         }
+        if ($result != null) # если вызвалось - возвращаем true, таким образом цикл разрывается
+        {
+            return true;
+        }
+        # если экшн не нашли, то покажем 404
+        $controller = new Controller();
+        return $controller->showError();
     }
 }
