@@ -12,7 +12,7 @@ class Controller
     /** @var string путь к видам */
     const VIEW_FOLDER = 'views/';
     /** @var string путь к шаблонам */
-    const LAYOUT_FOLDER = 'views/layouts';
+    const LAYOUT_FOLDER = 'views/layouts/';
 
     /** @var string дефолтный экшен */
     public $defaultAction = 'index';
