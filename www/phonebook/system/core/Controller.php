@@ -18,7 +18,7 @@ class Controller
     public $defaultAction = 'index';
     /** @var array  экшены, куда можно только авторизованным юзерам */
     public $authAction = [];
-    /** @var array  экшены, куда можно только авторизованным гостям */
+    /** @var array  экшены, куда можно только гостям */
     public $guestAction = [];
     /** @var string дефолтный шаблон */
     protected $layout = 'main';
@@ -35,7 +35,6 @@ class Controller
      */
     public function showError(string $message = null, $exit = false)
     {
-        var_dump('404');
         $this->render('404', compact('message'));
         if ($exit)
         {
@@ -54,6 +53,7 @@ class Controller
         $this->checkAction($view);
         $this->_view = $view;
         $this->_data = $data;
+        require self::VIEW_FOLDER . $view . '.php';
         return $this->getLayout();
     }
 
