@@ -13,7 +13,7 @@ class App
     private $_config;
     public static function start($config)
     {
-        session_start(); # стартуется либо возобновляется сессия
+        session_start(); # стартует либо возобновляется сессия
         $app = new self;
         $app->_config = $config; # передаём параметр $config в приватный конфиг приложения
         $app->setApp();
@@ -21,9 +21,13 @@ class App
 
     private function setApp()
     {
+        $array = [
+            'session' => new Session(),
+            'request' => new Request(),
+        ];
+
         $components = $this->getComponents(); # передаём результат выполнения функции в $components
-        $this->$components = (object) $components; #
-        return true;
+        self::$components = (object) array_merge($array,$components);
     }
 
     private function getComponents()
