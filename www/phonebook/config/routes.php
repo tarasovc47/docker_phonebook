@@ -1,7 +1,7 @@
 <?php
 return [
-    "site/index" => "site/index",
-    "site/news" => "site/news",
-    "auth/signup" => "auth/signup",
-    "auth/signin" => "auth/signin",
+    'auth/signup' => 'auth/signup',
+    'auth/signin' => 'auth/signin',
+    '' => 'phonebook/index',
+    'view/([0-9]+)' => 'phonebook/view/$1',
 ];
