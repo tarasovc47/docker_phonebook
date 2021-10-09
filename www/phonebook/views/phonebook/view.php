@@ -1,2 +1,3 @@
 <?php
-echo "просмотр контакта № " . $data['data'];
+#echo "просмотр контакта № " . $data['data'];
+#var_dump($data);
