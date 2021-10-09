@@ -50,7 +50,7 @@ class PhonebookController extends Controller
             $connect = Db::getConnection();
             $result = $connect->query('SELECT * FROM users WHERE id = ' . $id);
             $result->setFetchMode(PDO::FETCH_ASSOC);
-            if ($result->fetch() != null)
+            if ($result != null)
             {
                 return $result->fetch();
             }
