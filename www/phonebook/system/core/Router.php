@@ -30,7 +30,8 @@ class Router
         foreach ($this->_routes as $uriPattern => $path) {
             if (preg_match("~$uriPattern~", $uri)) # если совпадение найдено
             {
-                $segments = explode('/', $path); # разбиваем на массив
+                $internalRoute = preg_replace("~$uriPattern~", $path, $uri); # делаем удобоваримый путь
+                $segments = explode('/', $internalRoute); # разбиваем на массив
                 $controllerName = ucfirst(array_shift($segments) . 'Controller'); # получаем имя контроллера
                 $actionName = 'action' . ucfirst(array_shift($segments)); # получаем имя экшена
                 $parameters = $segments; # остальное из урла передаём в параметры
@@ -40,7 +41,7 @@ class Router
                     include_once ($controllerFile); # подключаем его
                 }
                 $controllerObject = new $controllerName; # создаём новый экземпляр конроллера
-                $result = $controllerObject->$actionName(); # вызываем экшен
+                $result = call_user_func_array(array($controllerObject, $actionName), $parameters);
             }
         }
         if ($result != null) # если вызвалось - возвращаем true, таким образом цикл разрывается
